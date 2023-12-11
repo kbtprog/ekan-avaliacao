@@ -1,0 +1,5 @@
+com\ekan\avaliacao\CrudApplicationTests.class
+com\ekan\avaliacao\service\BeneficiarioServiceTest.class
+com\ekan\avaliacao\service\DocumentoServiceTest.class
+com\ekan\avaliacao\controller\BeneficiarioControllerTest.class
+com\ekan\avaliacao\controller\DocumentoControllerTest.class
