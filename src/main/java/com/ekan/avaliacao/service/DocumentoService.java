@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ekan.avaliacao.exception.InternalServerErrorException;
 import com.ekan.avaliacao.model.dto.DocumentoDTO;
 import com.ekan.avaliacao.model.entity.Documento;
 import com.ekan.avaliacao.repository.DocumentoRepository;
@@ -17,22 +18,27 @@ public class DocumentoService {
 	@Autowired
 	private DocumentoRepository repository;
 	
-	public DocumentoDTO saveDocumento(DocumentoDTO dto){
-		Documento newDocumento = new Documento();
-		BeanUtils.copyProperties(dto, newDocumento);
+	public DocumentoDTO saveDocumento(DocumentoDTO dto) throws InternalServerErrorException{
 		
-		newDocumento.setBeneficiario(dto.getIdBeneficiario());
-		repository.save(newDocumento);
-		
-		DocumentoDTO result = new DocumentoDTO(
-				newDocumento.getId(), 
-				newDocumento.getTipoDocumento(), 
-				newDocumento.getDescricao(),
-				newDocumento.getDataInclusao(), 
-				newDocumento.getDataAtualizacao(), 
-				newDocumento.getBeneficiario());
-		
-		return result;
+		if (dto == null) { 
+			throw new InternalServerErrorException("Erro ao inserir o documento");
+		} else {
+			Documento newDocumento = new Documento();
+			BeanUtils.copyProperties(dto, newDocumento);
+			
+			newDocumento.setBeneficiario(dto.getIdBeneficiario());
+			newDocumento = repository.save(newDocumento);
+			
+			DocumentoDTO result = new DocumentoDTO(
+					newDocumento.getId(), 
+					newDocumento.getTipoDocumento(), 
+					newDocumento.getDescricao(),
+					newDocumento.getDataInclusao(), 
+					newDocumento.getDataAtualizacao(), 
+					newDocumento.getBeneficiario());
+			
+			return result;
+		}
 		
 	}
 	

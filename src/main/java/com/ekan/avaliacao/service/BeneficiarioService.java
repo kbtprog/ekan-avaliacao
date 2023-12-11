@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ekan.avaliacao.exception.InternalServerErrorException;
 import com.ekan.avaliacao.model.dto.BeneficiarioDTO;
 import com.ekan.avaliacao.model.dto.DocumentoDTO;
 import com.ekan.avaliacao.model.dto.input.BeneficiarioInputDTO;
@@ -41,7 +42,14 @@ public class BeneficiarioService {
 				.collect(Collectors.toList());
 	}
 	
-	public BeneficiarioDTO insertBeneficiario(BeneficiarioInputDTO dto) {
+	public BeneficiarioDTO insertBeneficiario(BeneficiarioInputDTO dto) throws InternalServerErrorException {
+		
+		if (dto == null) {
+			throw new InternalServerErrorException("Beneficiario não informado para inserção");
+		} else if (dto.getDocumentos().isEmpty()) {
+			throw new InternalServerErrorException("Não é possivel inserir um beneficiario sem informar pelo menos um documento");
+		}
+		
 		Beneficiario newBeneficiario = new Beneficiario();
 		BeanUtils.copyProperties(dto, newBeneficiario);
 		newBeneficiario.setDataInclusao(LocalDateTime.now());
@@ -77,6 +85,7 @@ public class BeneficiarioService {
 		
 		if (checkBeneficiario.isEmpty()) {
 			return result;
+			
 		} else {			
 			BeanUtils.copyProperties(dto, checkBeneficiario.get());
 			checkBeneficiario.get().setDataAtualizacao(LocalDateTime.now());

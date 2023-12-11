@@ -18,6 +18,7 @@ import com.ekan.avaliacao.exception.InternalServerErrorException;
 import com.ekan.avaliacao.exception.ResourceNotFoundException;
 import com.ekan.avaliacao.model.dto.BeneficiarioDTO;
 import com.ekan.avaliacao.model.dto.input.BeneficiarioInputDTO;
+import com.ekan.avaliacao.model.dto.input.BeneficiarioUpdateDTO;
 import com.ekan.avaliacao.service.BeneficiarioService;
 
 @Controller
@@ -43,11 +44,16 @@ public class BeneficiarioController {
 		}
 	}
 
-
 	@PostMapping
-	public ResponseEntity<?> updateBeneficiario(@RequestParam("id") Long id, 
-			@RequestBody BeneficiarioInputDTO beneficiarioDTO) throws ResourceNotFoundException {
-		BeneficiarioDTO result = service.updateBeneficiario(id, beneficiarioDTO);
+	public ResponseEntity<BeneficiarioDTO> updateBeneficiario(
+			@RequestParam("id") Long id, @RequestBody BeneficiarioUpdateDTO beneficiarioUpdateDTO) throws ResourceNotFoundException {
+		
+		BeneficiarioDTO result = service.updateBeneficiario(id, 
+				new BeneficiarioInputDTO(
+						beneficiarioUpdateDTO.getNome(), 
+						beneficiarioUpdateDTO.getTelefone(), 
+						null, 
+						beneficiarioUpdateDTO.getDataNascimento()));
 		
 		if (result == null) {
 			throw new ResourceNotFoundException("Beneficiario não encontrado");
@@ -56,12 +62,12 @@ public class BeneficiarioController {
 		}
 	}
 	
-	@DeleteMapping()
-	public ResponseEntity<?> deleteBeneficiario(@RequestParam("id") Long id) throws ResourceNotFoundException {
+	@DeleteMapping
+	public ResponseEntity<String> deleteBeneficiario(@RequestParam("id") Long id) throws ResourceNotFoundException {
 		Boolean deleteBeneficiario = service.deleteBeneficiario(id);
 		
 		if (deleteBeneficiario.booleanValue()) {
-			return ResponseEntity.status(HttpStatus.OK).body(null);
+			return ResponseEntity.status(HttpStatus.OK).body("Beneficiario e seus respectivos documentos excluidos com sucesso");
 		} else {
 			throw new ResourceNotFoundException("Beneficiario não encontrado");
 		}
