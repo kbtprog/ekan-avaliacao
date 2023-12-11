@@ -48,8 +48,8 @@ ou se no final era uma pegadinha, ainda sim eu anotei esses pontos para deixar e
 ## Instruções para Executar a Build  
 Estou considerando que a pessoa que irá rodar o teste já tem um ambiente de desenvolvimento instalado na maquina com as variaveis de ambiente devidamente configuradas.  
 Para subir a aplicação você pode seguir qualquer um dos trës passos a seguir: 
-- Executar o arquivo **"avaliacao-1.0.jar"** que consta dentro da pasta **/target** / Clicar nesse link: [avaliacao-1.0.jar](target/avaliacao-1.0.jar)
-- Executar o arquivo **"avaliacao-run.bat"** que consta dentro da pasta **/target** / Clicar nesse link: [avaliacao-run.bat](target/avaliacao-run.bat)
+- Executar o arquivo **"avaliacao-1.0.jar"** que consta dentro da pasta **/target** 
+- Executar o arquivo **"avaliacao-run.bat"** que consta dentro da pasta **/target** 
 - Importar o projeto em uma IDE, e subir ela como **Java Application** não esquecendo de apontar a classe **com.ekan.avaliacao.AvaliacaoApplication.java** 
   
 (Por algum motivo não consegui fazer os links tanto do jar como do bat manteem o cmd aberto, e finalizarem a aplicação ao encerrar)  
@@ -57,5 +57,5 @@ Para subir a aplicação você pode seguir qualquer um dos trës passos a seguir
   
 O caminho do swagger para teste dos endpoints está em: [Swagger](http://localhost:8080/swagger-ui/) ou [Swagger Index](http://localhost:8080/swagger-ui/index.html)
   
-Você pode ver o relatório de cobertura do Jacoco no link a seguir: [Jacoco Report](/avaliacao/target/site/jacoco/index.html)
+Você pode ver o relatório de cobertura do Jacoco dentro da pasta **/target/site/jacoco/index.html**
 
